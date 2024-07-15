@@ -11,5 +11,5 @@ const createAmazingPlugin = createPluginFactory({
     isElement: true,
     component: AmazingComponent,
 });
-export {KEY_AMAZING};
+export {KEY_AMAZING, AmazingComponent};
 export default createAmazingPlugin;

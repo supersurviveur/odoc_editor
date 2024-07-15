@@ -54,6 +54,7 @@ import {
     ELEMENT_H4,
     ELEMENT_H5,
     ELEMENT_H6,
+
     createHeadingPlugin,
 } from '@udecode/plate-heading';
 import {createHighlightPlugin} from '@udecode/plate-highlight';
@@ -136,8 +137,10 @@ import {BlockquoteElement} from "@/registry/default/plate-ui/blockquote-element"
 import {CodeBlockElement} from "@/registry/default/plate-ui/code-block-element";
 import {CodeLineElement} from "@/registry/default/plate-ui/code-line-element";
 import {CodeSyntaxLeaf} from "@/registry/default/plate-ui/code-syntax-leaf";
-import {HeadingElement} from "@/registry/default/plate-ui/heading-element";
-import {HrElement} from "@/registry/default/plate-ui/hr-element";
+// import {HeadingElement} from "@/registry/default/plate-ui/heading-element";
+// import {HrElement} from "@/registry/default/plate-ui/hr-element";
+import createAmazingPlugin, {KEY_AMAZING} from "./customCompnents/dataGrid";
+import {AmazingComponent} from "@/components/edtiro_compnents/amazing_com";
 
 export const usePlaygroundPlugins = ({
                                          components = createPlateUI(),
@@ -195,6 +198,7 @@ export const usePlaygroundPlugins = ({
                         },
                     }),
                     createSlashPlugin(),
+                    createAmazingPlugin(),
                     createTablePlugin({
                         enabled: !!enabled.table,
                         options: {
@@ -348,14 +352,7 @@ export const usePlaygroundPlugins = ({
                     createDeserializeMdPlugin({enabled: !!enabled.deserializeMd}),
                     createJuicePlugin({enabled: !!enabled.juice}),
                     createColumnPlugin({enabled: !!enabled.column}),
-                    withDraggables(
-                        withPlaceholders({
-                            [ELEMENT_BLOCKQUOTE]: BlockquoteElement,
-                            [ELEMENT_CODE_BLOCK]: CodeBlockElement,
-                            [ELEMENT_CODE_LINE]: CodeLineElement,
-                            [ELEMENT_CODE_SYNTAX]: CodeSyntaxLeaf,
-                        })
-                    ),
+
 
                 ],
                 {
@@ -392,25 +389,37 @@ export const useInitialValueVersion = (initialValue: Value) => {
     return version;
 };
 
-// const initialValue = [
-//     {
-//         id: "lkdf",
-//         type: "paragraph",
-//         children: [
-//             {text: "This is a paragraph."}
-//         ]
-//
-//     }
-// ]
+const initialValue = [
+    {
+        id: "lkdf",
+        type: ELEMENT_H1,
+        children: [{text: "This is a paragraph."}]
+    },
+    {
+        id: "98ryw",
+        type: KEY_AMAZING,
+        children: [{text: "Amaing"}]
+
+    }
+]
 
 export function PlaygroundDemo({id}: { id?: ValueId }) {
     const containerRef = useRef(null);
     const enabled = settingsStore.use.checkedComponents();
-    const initialValue = usePlaygroundValue(id);
-    const key = useInitialValueVersion(initialValue);
+    // const initialValue = usePlaygroundValue(id);
+    // const key = useInitialValueVersion(initialValue);
+    const key = "x";
 
     const plugins = usePlaygroundPlugins({
-        components: withDraggables(createPlateUI()),
+        components: withDraggables(createPlateUI(
+            {
+                [KEY_AMAZING]: AmazingComponent,
+            },
+            {
+                draggable: true,
+                placeholder: true,
+            }
+        )),
         id,
     });
 
