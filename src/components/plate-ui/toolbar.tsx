@@ -8,7 +8,8 @@ import { cva, VariantProps } from "class-variance-authority";
 import { Icons } from "@/components/icons";
 
 import { Separator } from "./separator";
-import { withTooltip } from "./tooltip";
+import {withTooltip} from "@/components/plate-ui/tooltip";
+// import { withTooltip } from "./tooltip";
 
 export const Toolbar = withCn(
   ToolbarPrimitive.Root,

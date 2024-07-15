@@ -35,40 +35,40 @@ export function FixedToolbarButtons() {
           <>
             <ToolbarGroup noSeparator>
               <InsertDropdownMenu />
-              <TurnIntoDropdownMenu />
+              {/*<TurnIntoDropdownMenu />*/}
             </ToolbarGroup>
 
-            <ToolbarGroup>
-              <MarkToolbarButton tooltip="Bold (⌘+B)" nodeType={MARK_BOLD}>
-                <Icons.bold />
-              </MarkToolbarButton>
-              <MarkToolbarButton tooltip="Italic (⌘+I)" nodeType={MARK_ITALIC}>
-                <Icons.italic />
-              </MarkToolbarButton>
-              <MarkToolbarButton
-                tooltip="Underline (⌘+U)"
-                nodeType={MARK_UNDERLINE}
-              >
-                <Icons.underline />
-              </MarkToolbarButton>
+            {/*<ToolbarGroup>*/}
+            {/*  <MarkToolbarButton tooltip="Bold (⌘+B)" nodeType={MARK_BOLD}>*/}
+            {/*    <Icons.bold />*/}
+            {/*  </MarkToolbarButton>*/}
+            {/*  <MarkToolbarButton tooltip="Italic (⌘+I)" nodeType={MARK_ITALIC}>*/}
+            {/*    <Icons.italic />*/}
+            {/*  </MarkToolbarButton>*/}
+            {/*  <MarkToolbarButton*/}
+            {/*    tooltip="Underline (⌘+U)"*/}
+            {/*    nodeType={MARK_UNDERLINE}*/}
+            {/*  >*/}
+            {/*    <Icons.underline />*/}
+            {/*  </MarkToolbarButton>*/}
 
-              <MarkToolbarButton
-                tooltip="Strikethrough (⌘+⇧+M)"
-                nodeType={MARK_STRIKETHROUGH}
-              >
-                <Icons.strikethrough />
-              </MarkToolbarButton>
-              <MarkToolbarButton tooltip="Code (⌘+E)" nodeType={MARK_CODE}>
-                <Icons.code />
-              </MarkToolbarButton>
-            </ToolbarGroup>
+            {/*  <MarkToolbarButton*/}
+            {/*    tooltip="Strikethrough (⌘+⇧+M)"*/}
+            {/*    nodeType={MARK_STRIKETHROUGH}*/}
+            {/*  >*/}
+            {/*    <Icons.strikethrough />*/}
+            {/*  </MarkToolbarButton>*/}
+            {/*  <MarkToolbarButton tooltip="Code (⌘+E)" nodeType={MARK_CODE}>*/}
+            {/*    <Icons.code />*/}
+            {/*  </MarkToolbarButton>*/}
+            {/*</ToolbarGroup>*/}
 
-            <ToolbarGroup>
-              <MediaToolbarButton nodeType={ELEMENT_IMAGE} />
-              <TableDropdownMenu />
-              <EmojiDropdownMenu />
-              <CustomChart />
-            </ToolbarGroup>
+            {/*<ToolbarGroup>*/}
+            {/*  <MediaToolbarButton nodeType={ELEMENT_IMAGE} />*/}
+            {/*  <TableDropdownMenu />*/}
+            {/*  <EmojiDropdownMenu />*/}
+            {/*  <CustomChart />*/}
+            {/*</ToolbarGroup>*/}
           </>
         )}
 
