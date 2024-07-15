@@ -6,7 +6,7 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import type {ValueId} from '@/config/customizer-plugins';
 
-import {cn} from '@udecode/cn';
+import {cn, withProps} from '@udecode/cn';
 import {createAlignPlugin} from '@udecode/plate-alignment';
 import {createAutoformatPlugin} from '@udecode/plate-autoformat';
 import {
@@ -30,7 +30,7 @@ import {
 import {createCaptionPlugin} from '@udecode/plate-caption';
 import {
     ELEMENT_CODE_BLOCK,
-    createCodeBlockPlugin,
+    createCodeBlockPlugin, ELEMENT_CODE_SYNTAX, ELEMENT_CODE_LINE,
 } from '@udecode/plate-code-block';
 import {createCommentsPlugin} from '@udecode/plate-comments';
 import {
@@ -57,7 +57,7 @@ import {
     createHeadingPlugin,
 } from '@udecode/plate-heading';
 import {createHighlightPlugin} from '@udecode/plate-highlight';
-import {createHorizontalRulePlugin} from '@udecode/plate-horizontal-rule';
+import {createHorizontalRulePlugin, ELEMENT_HR} from '@udecode/plate-horizontal-rule';
 import {createIndentPlugin} from '@udecode/plate-indent';
 import {createIndentListPlugin} from '@udecode/plate-indent-list';
 import {createJuicePlugin} from '@udecode/plate-juice';
@@ -130,6 +130,14 @@ import {
     TodoMarker,
 } from '@/registry/default/plate-ui/indent-todo-marker-component';
 import {Prism} from "@/registry/default/plate-ui/code-block-combobox";
+import {withDraggables} from "@/registry/default/plate-ui/with-draggables";
+import {withPlaceholders} from "@/registry/default/plate-ui/placeholder";
+import {BlockquoteElement} from "@/registry/default/plate-ui/blockquote-element";
+import {CodeBlockElement} from "@/registry/default/plate-ui/code-block-element";
+import {CodeLineElement} from "@/registry/default/plate-ui/code-line-element";
+import {CodeSyntaxLeaf} from "@/registry/default/plate-ui/code-syntax-leaf";
+import {HeadingElement} from "@/registry/default/plate-ui/heading-element";
+import {HrElement} from "@/registry/default/plate-ui/hr-element";
 
 export const usePlaygroundPlugins = ({
                                          components = createPlateUI(),
@@ -340,6 +348,15 @@ export const usePlaygroundPlugins = ({
                     createDeserializeMdPlugin({enabled: !!enabled.deserializeMd}),
                     createJuicePlugin({enabled: !!enabled.juice}),
                     createColumnPlugin({enabled: !!enabled.column}),
+                    withDraggables(
+                        withPlaceholders({
+                            [ELEMENT_BLOCKQUOTE]: BlockquoteElement,
+                            [ELEMENT_CODE_BLOCK]: CodeBlockElement,
+                            [ELEMENT_CODE_LINE]: CodeLineElement,
+                            [ELEMENT_CODE_SYNTAX]: CodeSyntaxLeaf,
+                        })
+                    ),
+
                 ],
                 {
                     components,
@@ -375,31 +392,25 @@ export const useInitialValueVersion = (initialValue: Value) => {
     return version;
 };
 
-const initialValue = [
-    {
-        id: "lkdf",
-        type: "paragraph",
-        children: [
-            {text: "This is a paragraph."}
-        ]
-
-    }
-]
+// const initialValue = [
+//     {
+//         id: "lkdf",
+//         type: "paragraph",
+//         children: [
+//             {text: "This is a paragraph."}
+//         ]
+//
+//     }
+// ]
 
 export function PlaygroundDemo({id}: { id?: ValueId }) {
     const containerRef = useRef(null);
     const enabled = settingsStore.use.checkedComponents();
-    // const initialValue = usePlaygroundValue(id);
+    const initialValue = usePlaygroundValue(id);
     const key = useInitialValueVersion(initialValue);
 
     const plugins = usePlaygroundPlugins({
-        components: createPlateUI(
-            {},
-            {
-                draggable: isEnabled('dnd', id),
-                placeholder: isEnabled('placeholder', id),
-            }
-        ),
+        components: withDraggables(createPlateUI()),
         id,
     });
 
