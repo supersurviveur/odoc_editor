@@ -1,19 +1,19 @@
 import {createPluginFactory} from "@udecode/plate-common";
 
-const KEY_AMAZING = 'amazing';
+const DATA_GIRD = 'data_grid';
 
 interface Props {
     children: any;
 }
 
-function AmazingComponent(p: Props) {
+function DataGridCom(p: Props) {
     return <div style={{color: 'red'}}>{p.children}</div>;
 }
 
-const createAmazingPlugin = createPluginFactory({
-    key: KEY_AMAZING,
+const createDataGrid = createPluginFactory({
+    key: DATA_GIRD,
     isElement: true,
-    component: AmazingComponent,
+    component: DataGridCom,
 });
-export {KEY_AMAZING, AmazingComponent};
-export default createAmazingPlugin;
+export {DATA_GIRD, DataGridCom};
+export default createDataGrid;

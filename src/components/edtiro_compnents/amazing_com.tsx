@@ -2,8 +2,14 @@ import {createPluginFactory} from "@udecode/plate-common";
 
 const KEY_AMAZING = 'amazing';
 
-function AmazingComponent({children}: any) {
-    return <h1 style={{color: 'red'}}>{children}</h1>;
+interface Props {
+    children: any;
+}
+
+function AmazingComponent(p: Props) {
+    const {element} = p;
+    // console.log({p});
+    return <div style={{color: 'red'}}>{p.children}</div>;
 }
 
 const createAmazingPlugin = createPluginFactory({

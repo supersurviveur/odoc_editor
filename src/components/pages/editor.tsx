@@ -1,12 +1,12 @@
 'use client';
 
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useMemo, useRef} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import type {ValueId} from '@/config/customizer-plugins';
 
-import {cn, withProps} from '@udecode/cn';
+import {cn} from '@udecode/cn';
 import {createAlignPlugin} from '@udecode/plate-alignment';
 import {createAutoformatPlugin} from '@udecode/plate-autoformat';
 import {
@@ -18,47 +18,27 @@ import {
     createSuperscriptPlugin,
     createUnderlinePlugin,
 } from '@udecode/plate-basic-marks';
-import {
-    ELEMENT_BLOCKQUOTE,
-    createBlockquotePlugin,
-} from '@udecode/plate-block-quote';
-import {
-    createExitBreakPlugin,
-    createSingleLinePlugin,
-    createSoftBreakPlugin,
-} from '@udecode/plate-break';
+import {createBlockquotePlugin, ELEMENT_BLOCKQUOTE,} from '@udecode/plate-block-quote';
+import {createExitBreakPlugin, createSingleLinePlugin, createSoftBreakPlugin,} from '@udecode/plate-break';
 import {createCaptionPlugin} from '@udecode/plate-caption';
-import {
-    ELEMENT_CODE_BLOCK,
-    createCodeBlockPlugin, ELEMENT_CODE_SYNTAX, ELEMENT_CODE_LINE,
-} from '@udecode/plate-code-block';
+import {createCodeBlockPlugin, ELEMENT_CODE_BLOCK,} from '@udecode/plate-code-block';
 import {createCommentsPlugin} from '@udecode/plate-comments';
-import {
-    Plate,
-    type PlatePluginComponent,
-    type Value,
-    createPlugins,
-} from '@udecode/plate-common';
+import {createPlugins, Plate, type PlatePluginComponent, useEditorRef,} from '@udecode/plate-common';
 import {createDndPlugin} from '@udecode/plate-dnd';
 import {createEmojiPlugin} from '@udecode/plate-emoji';
 import {createExcalidrawPlugin} from '@udecode/plate-excalidraw';
+import {createFontBackgroundColorPlugin, createFontColorPlugin, createFontSizePlugin,} from '@udecode/plate-font';
 import {
-    createFontBackgroundColorPlugin,
-    createFontColorPlugin,
-    createFontSizePlugin,
-} from '@udecode/plate-font';
-import {
+    createHeadingPlugin,
     ELEMENT_H1,
     ELEMENT_H2,
     ELEMENT_H3,
     ELEMENT_H4,
     ELEMENT_H5,
     ELEMENT_H6,
-
-    createHeadingPlugin,
 } from '@udecode/plate-heading';
 import {createHighlightPlugin} from '@udecode/plate-highlight';
-import {createHorizontalRulePlugin, ELEMENT_HR} from '@udecode/plate-horizontal-rule';
+import {createHorizontalRulePlugin} from '@udecode/plate-horizontal-rule';
 import {createIndentPlugin} from '@udecode/plate-indent';
 import {createIndentListPlugin} from '@udecode/plate-indent-list';
 import {createJuicePlugin} from '@udecode/plate-juice';
@@ -67,33 +47,23 @@ import {createColumnPlugin} from '@udecode/plate-layout';
 import {createLineHeightPlugin} from '@udecode/plate-line-height';
 import {createLinkPlugin} from '@udecode/plate-link';
 import {createListPlugin, createTodoListPlugin} from '@udecode/plate-list';
-import {
-    createImagePlugin,
-    createMediaEmbedPlugin,
-} from '@udecode/plate-media';
+import {createMediaEmbedPlugin,} from '@udecode/plate-media';
 import {createMentionPlugin} from '@udecode/plate-mention';
 import {createNodeIdPlugin} from '@udecode/plate-node-id';
 import {createNormalizeTypesPlugin} from '@udecode/plate-normalizers';
-import {
-    ELEMENT_PARAGRAPH,
-    createParagraphPlugin,
-} from '@udecode/plate-paragraph';
+import {createParagraphPlugin, ELEMENT_PARAGRAPH,} from '@udecode/plate-paragraph';
 import {createResetNodePlugin} from '@udecode/plate-reset-node';
-import {
-    createDeletePlugin,
-    createSelectOnBackspacePlugin,
-} from '@udecode/plate-select';
+import {createDeletePlugin, createSelectOnBackspacePlugin,} from '@udecode/plate-select';
 import {createBlockSelectionPlugin} from '@udecode/plate-selection';
 import {createDeserializeDocxPlugin} from '@udecode/plate-serializer-docx';
 import {createDeserializeMdPlugin} from '@udecode/plate-serializer-md';
 import {createSlashPlugin} from '@udecode/plate-slash-command';
 import {createTabbablePlugin} from '@udecode/plate-tabbable';
 import {createTablePlugin} from '@udecode/plate-table';
-import {ELEMENT_TOGGLE, createTogglePlugin} from '@udecode/plate-toggle';
+import {createTogglePlugin, ELEMENT_TOGGLE} from '@udecode/plate-toggle';
 import {createTrailingBlockPlugin} from '@udecode/plate-trailing-block';
 
 import {settingsStore} from '@/components/context/settings-store';
-import {PlaygroundFixedToolbarButtons} from '@/components/plate-ui/playground-fixed-toolbar-buttons';
 import {PlaygroundFloatingToolbarButtons} from '@/components/plate-ui/playground-floating-toolbar-buttons';
 import {captionPlugin} from '@/lib/plate/demo/plugins/captionPlugin';
 import {createPlateUI} from '@/lib/plate/create-plate-ui';
@@ -114,33 +84,17 @@ import {selectOnBackspacePlugin} from '@/lib/plate/demo/plugins/selectOnBackspac
 import {softBreakPlugin} from '@/lib/plate/demo/plugins/softBreakPlugin';
 import {tabbablePlugin} from '@/lib/plate/demo/plugins/tabbablePlugin';
 import {trailingBlockPlugin} from '@/lib/plate/demo/plugins/trailingBlockPlugin';
-import {usePlaygroundValue} from '@/lib/plate/demo/values/usePlaygroundValue';
 // import { Prism } from '@/components/plate-ui/code-block-combobox';
 import {CommentsPopover} from '@/components/plate-ui/comments-popover';
 import {CursorOverlay} from '@/registry/default/plate-ui/cursor-overlay';
 import {Editor} from '@/components/plate-ui/editor';
-import {FixedToolbar} from '@/components/plate-ui/fixed-toolbar';
 import {FloatingToolbar} from '@/components/plate-ui/floating-toolbar';
 // import {ImagePreview} from '@/registry/default/plate-ui/image-preview';
-import {
-    FireLiComponent,
-    FireMarker,
-} from '@/registry/default/plate-ui/indent-fire-marker-component';
-import {
-    TodoLi,
-    TodoMarker,
-} from '@/registry/default/plate-ui/indent-todo-marker-component';
+import {FireLiComponent, FireMarker,} from '@/registry/default/plate-ui/indent-fire-marker-component';
+import {TodoLi, TodoMarker,} from '@/registry/default/plate-ui/indent-todo-marker-component';
 import {Prism} from "@/registry/default/plate-ui/code-block-combobox";
 import {withDraggables} from "@/registry/default/plate-ui/with-draggables";
-import {withPlaceholders} from "@/registry/default/plate-ui/placeholder";
-import {BlockquoteElement} from "@/registry/default/plate-ui/blockquote-element";
-import {CodeBlockElement} from "@/registry/default/plate-ui/code-block-element";
-import {CodeLineElement} from "@/registry/default/plate-ui/code-line-element";
-import {CodeSyntaxLeaf} from "@/registry/default/plate-ui/code-syntax-leaf";
-// import {HeadingElement} from "@/registry/default/plate-ui/heading-element";
-// import {HrElement} from "@/registry/default/plate-ui/hr-element";
-import createAmazingPlugin, {KEY_AMAZING} from "./customCompnents/dataGrid";
-import {AmazingComponent} from "@/components/edtiro_compnents/amazing_com";
+import createAmazingPlugin from "@/components/edtiro_compnents/amazing_com";
 
 export const usePlaygroundPlugins = ({
                                          components = createPlateUI(),
@@ -366,71 +320,35 @@ export const usePlaygroundPlugins = ({
 };
 
 // reset editor when initialValue changes
-export const useInitialValueVersion = (initialValue: Value) => {
-    const enabled = settingsStore.use.checkedPlugins();
-    const [version, setVersion] = useState(1);
-    const prevEnabled = useRef(enabled);
-    const prevInitialValueRef = useRef(initialValue);
 
-    useEffect(() => {
-        if (enabled === prevEnabled.current) return;
 
-        prevEnabled.current = enabled;
-        setVersion((v) => v + 1);
-    }, [enabled]);
-
-    useEffect(() => {
-        if (initialValue === prevInitialValueRef.current) return;
-
-        prevInitialValueRef.current = initialValue;
-        setVersion((v) => v + 1);
-    }, [initialValue]);
-
-    return version;
-};
-
-const initialValue = [
-    {
-        id: "lkdf",
-        type: ELEMENT_H1,
-        children: [{text: "This is a paragraph."}]
-    },
-    {
-        id: "98ryw",
-        type: KEY_AMAZING,
-        children: [{text: "Amaing"}]
-
-    }
-]
-
-export function PlaygroundDemo({id}: { id?: ValueId }) {
+export function OdocEditor(props: { id?: ValueId, initialValue: any }) {
     const containerRef = useRef(null);
     const enabled = settingsStore.use.checkedComponents();
-    // const initialValue = usePlaygroundValue(id);
-    // const key = useInitialValueVersion(initialValue);
-    const key = "x";
+    const {id, initialValue, onChange} = props;
 
     const plugins = usePlaygroundPlugins({
-        components: withDraggables(createPlateUI(
-            {
-                [KEY_AMAZING]: AmazingComponent,
-            },
-            {
-                draggable: true,
-                placeholder: true,
-            }
-        )),
+        components: withDraggables(createPlateUI()),
         id,
     });
+    let onEditorChange = (changes: any) => {
+        console.log(changes.operation)
+    };
+    let onInserComponent = (component: any) => {
+        console.log("insert com", component)
+    };
+
 
     return (
         <DndProvider backend={HTML5Backend}>
             <div className="relative">
                 <Plate
+
                     initialValue={initialValue}
-                    key={key}
+                    key={id}
                     normalizeInitialValue
                     plugins={plugins}
+                    onChange={onChange}
                 >
                     <CommentsProvider>
                         {/*{enabled['fixed-toolbar'] && (*/}
@@ -467,7 +385,7 @@ export function PlaygroundDemo({id}: { id?: ValueId }) {
                                         id && 'pb-8 pt-2'
                                     )}
                                     focusRing={false}
-                                    placeholder=""
+                                    placeholder={'place holder test'}
                                     size="md"
                                     variant="ghost"
                                 />

@@ -39,7 +39,7 @@ export const withPlaceholders = (components: any) =>
     {
       hideOnBlur: true,
       key: ELEMENT_PARAGRAPH,
-      placeholder: 'Type a paragraph',
+      placeholder: 'Type text or @,/, or :',
       query: {
         maxLevel: 1,
       },

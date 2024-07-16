@@ -87,6 +87,7 @@ import {TodoListElement} from '@/registry/default/plate-ui/todo-list-element';
 import {ToggleElement} from '@/registry/default/plate-ui/toggle-element';
 import {withDraggables} from '@/registry/default/plate-ui/with-draggables';
 import {ELEMENT_EMOJI_INPUT} from "@udecode/plate-emoji";
+import {AmazingComponent, KEY_AMAZING} from "@/components/edtiro_compnents/amazing_com";
 
 // import { ELEMENT_EMOJI_INPUT } from '../../packages/emoji/dist';
 
@@ -140,6 +141,7 @@ export const createPlateUI = (
         [MARK_SUBSCRIPT]: withProps(PlateLeaf, {as: 'sub'}),
         [MARK_SUPERSCRIPT]: withProps(PlateLeaf, {as: 'sup'}),
         [MARK_UNDERLINE]: withProps(PlateLeaf, {as: 'u'}),
+        // [KEY_AMAZING]: AmazingComponent,
     };
 
     if (overrideByKey) {
@@ -147,9 +149,9 @@ export const createPlateUI = (
             (components as any)[key] = (overrideByKey as any)[key];
         });
     }
-    if (placeholder) {
-        components = withPlaceholders(components);
-    }
+    // if (placeholder) {
+    components = withPlaceholders(components);
+    // }
     if (draggable) {
         components = withDraggables(components);
     }

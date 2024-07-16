@@ -1,162 +1,173 @@
-"use client";
+'use client';
 
-import {cn, withRef} from "@udecode/cn";
-import {ClassNames, PlateElementProps, TEditor} from "@udecode/plate-common";
+import React from 'react';
+
+import type {
+  ClassNames,
+  PlateElementProps,
+  TEditor,
+} from '@udecode/plate-common';
+import type { DropTargetMonitor } from 'react-dnd';
+
+import { cn, withRef } from '@udecode/cn';
 import {
-    DragItemNode,
-    useDraggable,
-    useDraggableState,
-} from "@udecode/plate-dnd";
-import {DropTargetMonitor} from "react-dnd";
+  type DragItemNode,
+  useDraggable,
+  useDraggableState,
+} from '@udecode/plate-dnd';
+import { blockSelectionActions } from '@udecode/plate-selection';
 
-import {Icons} from "@/components/icons";
-import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/plate-ui/tooltip";
+import { Icons } from '@/components/icons';
 
-// import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "./tooltip";
-// import * as TooltipPrimitive from '@radix-ui/react-tooltip';
-//
-// export const TooltipProvider = TooltipPrimitive.Provider;
-// export const Tooltip = TooltipPrimitive.Root;
-// export const TooltipTrigger = TooltipPrimitive.Trigger;
-// export const TooltipPortal = TooltipPrimitive.Portal;
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipPortal,
+  TooltipTrigger,
+} from './tooltip';
+
 export interface DraggableProps
-    extends PlateElementProps,
-        ClassNames<{
-            /**
-             * Block and gutter.
-             */
-            blockAndGutter: string;
+  extends PlateElementProps,
+    ClassNames<{
+      /** Block. */
+      block: string;
 
-            /**
-             * Block.
-             */
-            block: string;
+      /** Block and gutter. */
+      blockAndGutter: string;
 
-            /**
-             * Gutter at the left side of the editor.
-             * It has the height of the block
-             */
-            gutterLeft: string;
+      /** Block toolbar in the gutter. */
+      blockToolbar: string;
 
-            /**
-             * Block toolbar wrapper in the gutter left.
-             * It has the height of a line of the block.
-             */
-            blockToolbarWrapper: string;
+      /**
+       * Block toolbar wrapper in the gutter left. It has the height of a line
+       * of the block.
+       */
+      blockToolbarWrapper: string;
 
-            /**
-             * Block toolbar in the gutter.
-             */
-            blockToolbar: string;
+      blockWrapper: string;
 
-            blockWrapper: string;
+      /** Button to dnd the block, in the block toolbar. */
+      dragHandle: string;
 
-            /**
-             * Button to dnd the block, in the block toolbar.
-             */
-            dragHandle: string;
+      /** Icon of the drag button, in the drag icon. */
+      dragIcon: string;
 
-            /**
-             * Icon of the drag button, in the drag icon.
-             */
-            dragIcon: string;
+      /** Show a dropline above or below the block when dragging a block. */
+      dropLine: string;
 
-            /**
-             * Show a dropline above or below the block when dragging a block.
-             */
-            dropLine: string;
-        }> {
-    /**
-     * Intercepts the drop handling.
-     * If `false` is returned, the default drop behavior is called after.
-     * If `true` is returned, the default behavior is not called.
-     */
-    onDropHandler?: (
-        editor: TEditor,
-        props: {
-            monitor: DropTargetMonitor<DragItemNode, unknown>;
-            dragItem: DragItemNode;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            nodeRef: any;
-            id: string;
-        }
-    ) => boolean;
+      /** Gutter at the left side of the editor. It has the height of the block */
+      gutterLeft: string;
+    }> {
+  /**
+   * Intercepts the drop handling. If `false` is returned, the default drop
+   * behavior is called after. If `true` is returned, the default behavior is
+   * not called.
+   */
+  onDropHandler?: (
+    editor: TEditor,
+    props: {
+      dragItem: DragItemNode;
+      id: string;
+      monitor: DropTargetMonitor<DragItemNode, unknown>;
+      nodeRef: any;
+    }
+  ) => boolean;
 }
 
-const dragHandle = (
-    <TooltipProvider>
-        <Tooltip>
-            <TooltipTrigger>
-                <Icons.dragHandle className="h-4 w-4 text-muted-foreground"/>
-            </TooltipTrigger>
-            <TooltipContent>Drag to move</TooltipContent>
-        </Tooltip>
-    </TooltipProvider>
-);
+const DragHandle = () => {
+  return (
+    <Tooltip>
+      <TooltipTrigger type="button">
+        <Icons.dragHandle
+          className="size-4 text-muted-foreground"
+          onClick={(event) => {
+            event.stopPropagation();
+            event.preventDefault();
 
-export const Draggable = withRef<"div", DraggableProps>(
-    ({className, classNames = {}, onDropHandler, ...props}, ref) => {
-        const {children, element} = props;
+            // if (element.id) {
+            //   blockSelectionActions.addSelectedRow(element.id as string);
+            //   blockContextMenuActions.show(editor.id, event as any);
+            // }
+          }}
+          onMouseDown={() => {
+            blockSelectionActions.resetSelectedIds();
+          }}
+        />
+      </TooltipTrigger>
+      <TooltipPortal>
+        <TooltipContent>Drag to move</TooltipContent>
+      </TooltipPortal>
+    </Tooltip>
+  );
+};
 
-        const state = useDraggableState({element, onDropHandler});
-        const {dropLine, isDragging, isHovered} = state;
-        const {
-            groupProps,
-            droplineProps,
-            gutterLeftProps,
-            previewRef,
-            handleRef,
-        } = useDraggable(state);
+export const Draggable = withRef<'div', DraggableProps>(
+  ({ className, classNames = {}, onDropHandler, ...props }, ref) => {
+    const { children, element } = props;
 
-        return (
+    const state = useDraggableState({ element, onDropHandler });
+    const { dropLine, isDragging, isHovered } = state;
+    const {
+      droplineProps,
+      groupProps,
+      gutterLeftProps,
+      handleRef,
+      previewRef,
+    } = useDraggable(state);
+
+    return (
+      <div
+        className={cn(
+          'relative',
+          isDragging && 'opacity-50',
+          'group',
+          className
+        )}
+        ref={ref}
+        {...groupProps}
+      >
+        <div
+          className={cn(
+            'pointer-events-none absolute -top-px z-50 flex h-full -translate-x-full cursor-text opacity-0 group-hover:opacity-100',
+            classNames.gutterLeft
+          )}
+          {...gutterLeftProps}
+        >
+          <div className={cn('flex h-[1.5em]', classNames.blockToolbarWrapper)}>
             <div
-                ref={ref}
-                className={cn(
-                    "relative",
-                    isDragging && "opacity-50",
-                    "group",
-                    className
-                )}
-                {...groupProps}
+              className={cn(
+                'pointer-events-auto mr-1 flex items-center',
+                classNames.blockToolbar
+              )}
             >
-                <div
-                    className={cn(
-                        "pointer-events-none absolute top-0 flex h-full -translate-x-full cursor-text opacity-0 group-hover:opacity-100",
-                        classNames.gutterLeft
-                    )}
-                    {...gutterLeftProps}
-                >
-                    <div className={cn("flex h-[1.5em]", classNames.blockToolbarWrapper)}>
-                        <div
-                            className={cn(
-                                "pointer-events-auto mr-1 flex items-center",
-                                classNames.blockToolbar
-                            )}
-                        >
-                            <div ref={handleRef} className="h-4 w-4">
-                                {isHovered && dragHandle}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={classNames.blockWrapper} ref={previewRef}>
-                    {children}
-
-                    {!!dropLine && (
-                        <div
-                            className={cn(
-                                "absolute inset-x-0 h-0.5 opacity-100",
-                                "bg-ring",
-                                dropLine === "top" && "-top-px",
-                                dropLine === "bottom" && "-bottom-px",
-                                classNames.dropLine
-                            )}
-                            {...droplineProps}
-                        />
-                    )}
-                </div>
+              <div
+                className="size-4"
+                data-key={element.id as string}
+                ref={handleRef}
+              >
+                {isHovered && <DragHandle />}
+              </div>
             </div>
-        );
-    }
+          </div>
+        </div>
+
+        <div className={classNames.blockWrapper} ref={previewRef}>
+          {children}
+
+          {!!dropLine && (
+            <div
+              className={cn(
+                'absolute inset-x-0 h-0.5 opacity-100',
+                'bg-ring',
+                dropLine === 'top' && '-top-px',
+                dropLine === 'bottom' && '-bottom-px',
+                classNames.dropLine
+              )}
+              {...droplineProps}
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
 );
