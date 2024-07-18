@@ -12,7 +12,7 @@ import { Plate, createPlugins } from '@udecode/plate-common';
 import { createHeadingPlugin } from '@udecode/plate-heading';
 import { createParagraphPlugin } from '@udecode/plate-paragraph';
 
-import { createPlateUI } from '@/plate/create-plate-ui';
+import { createPlateUI } from '@/lib/plate/create-plate-ui';
 import { Editor } from '@/registry/default/plate-ui/editor';
 
 const plugins = createPlugins(

@@ -9,6 +9,7 @@ import {
 import { cva } from 'class-variance-authority';
 
 import { Icons } from '@/components/icons';
+import { ArrowLeft, ArrowRight, Download } from 'lucide-react';
 
 const toolButtonVariants = cva('rounded bg-[rgba(0,0,0,0.5)] px-1', {
   defaultVariants: {
@@ -80,7 +81,7 @@ export const ImagePreview = () => {
                 )}
                 type="button"
               >
-                <Icons.arrowLeft className="size-5" />
+                <ArrowLeft className="size-5" />
               </button>
               {(currentUrlIndex ?? 0) + 1}
               <button
@@ -92,7 +93,7 @@ export const ImagePreview = () => {
                 )}
                 type="button"
               >
-                <Icons.arrowRight className="size-5" />
+                <ArrowRight className="size-5" />
               </button>
             </div>
             <div className="flex ">
@@ -131,7 +132,7 @@ export const ImagePreview = () => {
             </div>
             {/* TODO: downLoad the image */}
             <button className={cn(toolButtonVariants())} type="button">
-              <Icons.downLoad className="size-4" />
+              <Download className="size-4" />
             </button>
             <button
               {...closeProps}

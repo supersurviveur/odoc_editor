@@ -1,5 +1,3 @@
-import React from 'react';
-
 import type { ValueId } from '@/config/customizer-plugins';
 
 import {
@@ -18,8 +16,8 @@ import { LinkToolbarButton } from '@/registry/default/plate-ui/link-toolbar-butt
 import { MarkToolbarButton } from '@/registry/default/plate-ui/mark-toolbar-button';
 import { ToolbarSeparator } from '@/registry/default/plate-ui/toolbar';
 
-import { PlaygroundMoreDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-more-dropdown-menu';
-import { PlaygroundTurnIntoDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-turn-into-dropdown-menu';
+// import { PlaygroundMoreDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-more-dropdown-menu';
+// import { PlaygroundTurnIntoDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-turn-into-dropdown-menu';
 
 export function PlaygroundFloatingToolbarButtons({ id }: { id?: ValueId }) {
   const readOnly = useEditorReadOnly();
@@ -28,7 +26,7 @@ export function PlaygroundFloatingToolbarButtons({ id }: { id?: ValueId }) {
     <>
       {!readOnly && (
         <>
-          <PlaygroundTurnIntoDropdownMenu />
+          {/* <PlaygroundTurnIntoDropdownMenu /> */}
 
           <MarkToolbarButton nodeType={MARK_BOLD} tooltip="Bold (⌘+B)">
             <Icons.bold />
@@ -60,7 +58,7 @@ export function PlaygroundFloatingToolbarButtons({ id }: { id?: ValueId }) {
 
       {isEnabled('comment', id) && <CommentToolbarButton />}
 
-      <PlaygroundMoreDropdownMenu />
+      {/* <PlaygroundMoreDropdownMenu /> */}
     </>
   );
 }

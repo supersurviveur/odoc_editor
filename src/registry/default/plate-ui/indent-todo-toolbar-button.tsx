@@ -4,7 +4,7 @@ import {
 } from '@udecode/plate-indent-list';
 import { withRef } from '@udecode/react-utils';
 
-import { Icons } from '@/components/icons';
+// import { Icons } from '@/components/icons';
 
 import { ToolbarButton } from './toolbar';
 
@@ -15,7 +15,7 @@ export const IndentTodoToolbarButton = withRef<typeof ToolbarButton>(
 
     return (
       <ToolbarButton ref={ref} tooltip="Todo" {...props} {...rest}>
-        <Icons.todo />
+        {/* <Icons.todo /> */}
       </ToolbarButton>
     );
   }

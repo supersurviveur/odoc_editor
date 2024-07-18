@@ -1,8 +1,6 @@
-import React from 'react';
-
 import { Plate } from '@udecode/plate-common';
 
-import { PlaygroundTurnIntoDropdownMenu } from '@/components/plate-ui/playground-turn-into-dropdown-menu';
+// import { PlaygroundTurnIntoDropdownMenu } from '@/components/plate-ui/playground-turn-into-dropdown-menu';
 import { basicNodesPlugins } from '@/lib/plate/demo/plugins/basicNodesPlugins';
 import { imagePlugins } from '@/lib/plate/demo/plugins/imagePlugins';
 import { basicElementsValue } from '@/lib/plate/demo/values/basicElementsValue';
@@ -22,7 +20,7 @@ export default function MultipleEditorsDemo() {
       >
         <Plate id="image" initialValue={imageValue} plugins={imagePlugins}>
           <FixedToolbar>
-            <PlaygroundTurnIntoDropdownMenu />
+            {/* <PlaygroundTurnIntoDropdownMenu /> */}
           </FixedToolbar>
 
           <div>

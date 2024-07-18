@@ -1,159 +1,162 @@
-/* eslint-disable @typescript-eslint/require-await */
-'use server';
+// /* eslint-disable @typescript-eslint/require-await */
+// 'use server';
 
-import type { Style } from '@/registry/styles';
+// import type { Style } from '@/registry/styles';
 
-import { promises as fs } from 'node:fs';
-import { tmpdir } from 'node:os';
-import path from 'node:path';
-import { Project, ScriptKind, type SourceFile, SyntaxKind } from 'ts-morph';
-import { z } from 'zod';
+// import { promises as fs } from 'node:fs';
+// import { tmpdir } from 'node:os';
+// import path from 'node:path';
+// import { Project, ScriptKind, type SourceFile, SyntaxKind } from 'ts-morph';
+// import { z } from 'zod';
 
-import { Index } from '@/__registry__';
-import {
-  type BlockChunk,
-  blockSchema,
-  registryEntrySchema,
-} from '@/registry/schema';
+// // import { Index } from '@/__registry__';
+// // import { Index } from '@/registry/default/plate-ui/';
 
-import { highlightCode } from './highlight-code';
 
-const DEFAULT_BLOCKS_STYLE = 'default' satisfies Style['name'];
+// import {
+//   type BlockChunk,
+//   blockSchema,
+//   registryEntrySchema,
+// } from '@/registry/schema';
 
-const project = new Project({
-  compilerOptions: {},
-});
+// import { highlightCode } from './highlight-code';
 
-export async function getAllBlockIds(
-  style: Style['name'] = DEFAULT_BLOCKS_STYLE
-) {
-  const blocks = _getAllBlocks(style);
+// const DEFAULT_BLOCKS_STYLE = 'default' satisfies Style['name'];
 
-  return blocks.map((block) => block.name);
-}
+// const project = new Project({
+//   compilerOptions: {},
+// });
 
-export async function getBlock(
-  name: string,
-  style: Style['name'] = DEFAULT_BLOCKS_STYLE
-) {
-  const entry = Index[style][name];
+// export async function getAllBlockIds(
+//   style: Style['name'] = DEFAULT_BLOCKS_STYLE
+// ) {
+//   const blocks = _getAllBlocks(style);
 
-  const content = await _getBlockContent(name, style);
+//   return blocks.map((block) => block.name);
+// }
 
-  const chunks = await Promise.all(
-    entry.chunks?.map(async (chunk: BlockChunk) => {
-      const code = await readFile(chunk.file);
+// export async function getBlock(
+//   name: string,
+//   style: Style['name'] = DEFAULT_BLOCKS_STYLE
+// ) {
+//   const entry = Index[style][name];
 
-      const tempFile = await createTempSourceFile(`${chunk.name}.tsx`);
-      const sourceFile = project.createSourceFile(tempFile, code, {
-        scriptKind: ScriptKind.TSX,
-      });
+//   const content = await _getBlockContent(name, style);
 
-      sourceFile
-        .getDescendantsOfKind(SyntaxKind.JsxOpeningElement)
-        .filter((node) => {
-          return node.getAttribute('x-chunk') !== undefined;
-        })
-        ?.map((component) => {
-          component
-            .getAttribute('x-chunk')
-            ?.asKind(SyntaxKind.JsxAttribute)
-            ?.remove();
-        });
+//   const chunks = await Promise.all(
+//     entry.chunks?.map(async (chunk: BlockChunk) => {
+//       const code = await readFile(chunk.file);
 
-      return {
-        ...chunk,
-        code: sourceFile
-          .getText()
-          .replaceAll(`@/registry/${style}/`, '@/components/'),
-      };
-    })
-  );
+//       const tempFile = await createTempSourceFile(`${chunk.name}.tsx`);
+//       const sourceFile = project.createSourceFile(tempFile, code, {
+//         scriptKind: ScriptKind.TSX,
+//       });
 
-  return blockSchema.parse({
-    highlightedCode: content.code ? await highlightCode(content.code) : '',
-    style,
-    ...entry,
-    ...content,
-    chunks,
-    type: 'components:block',
-  });
-}
+//       sourceFile
+//         .getDescendantsOfKind(SyntaxKind.JsxOpeningElement)
+//         .filter((node) => {
+//           return node.getAttribute('x-chunk') !== undefined;
+//         })
+//         ?.map((component) => {
+//           component
+//             .getAttribute('x-chunk')
+//             ?.asKind(SyntaxKind.JsxAttribute)
+//             ?.remove();
+//         });
 
-function _getAllBlocks(style: Style['name'] = DEFAULT_BLOCKS_STYLE) {
-  const index = z.record(registryEntrySchema).parse(Index[style]);
+//       return {
+//         ...chunk,
+//         code: sourceFile
+//           .getText()
+//           .replaceAll(`@/registry/${style}/`, '@/components/'),
+//       };
+//     })
+//   );
 
-  return Object.values(index).filter(
-    (block) => block.type === 'components:block'
-  );
-}
+//   return blockSchema.parse({
+//     highlightedCode: content.code ? await highlightCode(content.code) : '',
+//     style,
+//     ...entry,
+//     ...content,
+//     chunks,
+//     type: 'components:block',
+//   });
+// }
 
-async function _getBlockCode(
-  name: string,
-  style: Style['name'] = DEFAULT_BLOCKS_STYLE
-) {
-  const entry = Index[style][name];
-  const block = registryEntrySchema.parse(entry);
+// function _getAllBlocks(style: Style['name'] = DEFAULT_BLOCKS_STYLE) {
+//   const index = z.record(registryEntrySchema).parse(Index[style]);
 
-  if (!block.source) {
-    return '';
-  }
+//   return Object.values(index).filter(
+//     (block) => block.type === 'components:block'
+//   );
+// }
 
-  return await readFile(block.source);
-}
+// async function _getBlockCode(
+//   name: string,
+//   style: Style['name'] = DEFAULT_BLOCKS_STYLE
+// ) {
+//   const entry = Index[style][name];
+//   const block = registryEntrySchema.parse(entry);
 
-async function readFile(source: string) {
-  const filepath = path.join(process.cwd(), source);
+//   if (!block.source) {
+//     return '';
+//   }
 
-  return await fs.readFile(filepath, 'utf8');
-}
+//   return await readFile(block.source);
+// }
 
-async function createTempSourceFile(filename: string) {
-  const dir = await fs.mkdtemp(path.join(tmpdir(), 'codex-'));
+// async function readFile(source: string) {
+//   const filepath = path.join(process.cwd(), source);
 
-  return path.join(dir, filename);
-}
+//   return await fs.readFile(filepath, 'utf8');
+// }
 
-async function _getBlockContent(name: string, style: Style['name']) {
-  const raw = await _getBlockCode(name, style);
+// async function createTempSourceFile(filename: string) {
+//   const dir = await fs.mkdtemp(path.join(tmpdir(), 'codex-'));
 
-  const tempFile = await createTempSourceFile(`${name}.tsx`);
-  const sourceFile = project.createSourceFile(tempFile, raw, {
-    scriptKind: ScriptKind.TSX,
-  });
+//   return path.join(dir, filename);
+// }
 
-  // Extract meta.
-  const description = _extractVariable(sourceFile, 'description');
-  const iframeHeight = _extractVariable(sourceFile, 'iframeHeight');
-  const containerClassName = _extractVariable(sourceFile, 'containerClassName');
+// async function _getBlockContent(name: string, style: Style['name']) {
+//   const raw = await _getBlockCode(name, style);
 
-  // Format the code.
-  let code = sourceFile.getText();
-  code = code.replaceAll(`@/registry/${style}/`, '@/components/');
-  code = code.replaceAll('export default', 'export');
+//   const tempFile = await createTempSourceFile(`${name}.tsx`);
+//   const sourceFile = project.createSourceFile(tempFile, raw, {
+//     scriptKind: ScriptKind.TSX,
+//   });
 
-  return {
-    code,
-    container: {
-      className: containerClassName,
-      height: iframeHeight,
-    },
-    description,
-  };
-}
+//   // Extract meta.
+//   const description = _extractVariable(sourceFile, 'description');
+//   const iframeHeight = _extractVariable(sourceFile, 'iframeHeight');
+//   const containerClassName = _extractVariable(sourceFile, 'containerClassName');
 
-function _extractVariable(sourceFile: SourceFile, name: string) {
-  const variable = sourceFile.getVariableDeclaration(name);
+//   // Format the code.
+//   let code = sourceFile.getText();
+//   code = code.replaceAll(`@/registry/${style}/`, '@/components/');
+//   code = code.replaceAll('export default', 'export');
 
-  if (!variable) {
-    return null;
-  }
+//   return {
+//     code,
+//     container: {
+//       className: containerClassName,
+//       height: iframeHeight,
+//     },
+//     description,
+//   };
+// }
 
-  const value = variable
-    .getInitializerIfKindOrThrow(SyntaxKind.StringLiteral)
-    .getLiteralValue();
+// function _extractVariable(sourceFile: SourceFile, name: string) {
+//   const variable = sourceFile.getVariableDeclaration(name);
 
-  variable.remove();
+//   if (!variable) {
+//     return null;
+//   }
 
-  return value;
-}
+//   const value = variable
+//     .getInitializerIfKindOrThrow(SyntaxKind.StringLiteral)
+//     .getLiteralValue();
+
+//   variable.remove();
+
+//   return value;
+// }

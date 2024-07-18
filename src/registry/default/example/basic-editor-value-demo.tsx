@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Plate } from '@udecode/plate-common';
 
 import { editableProps } from '@/lib/plate/demo/editableProps';

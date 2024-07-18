@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
 
 import { cn } from '@udecode/cn';
 import {

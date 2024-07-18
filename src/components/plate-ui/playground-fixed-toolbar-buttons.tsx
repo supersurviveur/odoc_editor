@@ -1,5 +1,3 @@
-import React from 'react';
-
 import type { ValueId } from '@/config/customizer-plugins';
 
 import {
@@ -35,10 +33,10 @@ import { TableDropdownMenu } from '@/registry/default/plate-ui/table-dropdown-me
 import { ToggleToolbarButton } from '@/registry/default/plate-ui/toggle-toolbar-button';
 import { ToolbarGroup } from '@/registry/default/plate-ui/toolbar';
 
-import { PlaygroundInsertDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-insert-dropdown-menu';
-import { PlaygroundModeDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-mode-dropdown-menu';
-import { PlaygroundMoreDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-more-dropdown-menu';
-import { PlaygroundTurnIntoDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-turn-into-dropdown-menu';
+// import { PlaygroundInsertDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-insert-dropdown-menu';
+// import { PlaygroundModeDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-mode-dropdown-menu';
+// import { PlaygroundMoreDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-more-dropdown-menu';
+// import { PlaygroundTurnIntoDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-turn-into-dropdown-menu';
 
 export function PlaygroundFixedToolbarButtons({ id }: { id?: ValueId }) {
   const readOnly = useEditorReadOnly();
@@ -56,10 +54,10 @@ export function PlaygroundFixedToolbarButtons({ id }: { id?: ValueId }) {
         {!readOnly && (
           <>
             <ToolbarGroup noSeparator>
-              <PlaygroundInsertDropdownMenu />
+              {/* <PlaygroundInsertDropdownMenu />
               {isEnabled('basicnodes', id) && (
                 <PlaygroundTurnIntoDropdownMenu />
-              )}
+              )} */}
             </ToolbarGroup>
 
             <ToolbarGroup>
@@ -152,7 +150,7 @@ export function PlaygroundFixedToolbarButtons({ id }: { id?: ValueId }) {
 
               {isEnabled('emoji', id) && <EmojiDropdownMenu />}
 
-              <PlaygroundMoreDropdownMenu />
+              {/* <PlaygroundMoreDropdownMenu /> */}
             </ToolbarGroup>
           </>
         )}
@@ -161,7 +159,7 @@ export function PlaygroundFixedToolbarButtons({ id }: { id?: ValueId }) {
 
         <ToolbarGroup noSeparator>
           {isEnabled('comment', id) && <CommentToolbarButton />}
-          <PlaygroundModeDropdownMenu />
+          {/* <PlaygroundModeDropdownMenu /> */}
         </ToolbarGroup>
       </div>
     </div>

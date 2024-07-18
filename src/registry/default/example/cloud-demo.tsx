@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   ELEMENT_CLOUD_ATTACHMENT,
   ELEMENT_CLOUD_IMAGE,

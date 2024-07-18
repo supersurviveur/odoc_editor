@@ -1,4 +1,4 @@
-import React, {type ComponentType, type SVGProps} from 'react';
+import {type ComponentType, type SVGProps} from 'react';
 
 import {withRef} from '@udecode/cn';
 import {

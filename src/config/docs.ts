@@ -1,14 +1,14 @@
-import type { MainNavItem, SidebarNavItem } from '@/types/nav';
+// import type { MainNavItem, SidebarNavItem } from '@/types/nav';
 
 import { customizerComponents } from '@/config/customizer-components';
 
-export interface DocsConfig {
-  componentsNav: SidebarNavItem[];
-  mainNav: MainNavItem[];
-  sidebarNav: SidebarNavItem[];
-}
+// export interface DocsConfig {
+//   componentsNav: SidebarNavItem[];
+//   mainNav: MainNavItem[];
+//   sidebarNav: SidebarNavItem[];
+// }
 
-export const docsConfig: DocsConfig = {
+export const docsConfig = {
   componentsNav: [
     {
       items: [

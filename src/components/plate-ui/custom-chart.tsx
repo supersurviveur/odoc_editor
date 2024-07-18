@@ -7,13 +7,13 @@ import {
   useEditorSelector,
 } from "@udecode/plate-common";
 import {
-  deleteColumn,
-  deleteRow,
+  // deleteColumn,
+  // deleteRow,
   deleteTable,
   ELEMENT_TABLE,
-  insertTable,
-  insertTableColumn,
-  insertTableRow,
+  // insertTable,
+  // insertTableColumn,
+  // insertTableRow,
 } from "@udecode/plate-table";
 
 import { Icons, iconVariants } from "@/components/icons";

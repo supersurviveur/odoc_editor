@@ -4,7 +4,7 @@ import { createBasicElementsPlugin } from '@udecode/plate-basic-elements';
 import { createBasicMarksPlugin } from '@udecode/plate-basic-marks';
 import { Plate, createPlugins } from '@udecode/plate-common';
 
-import { createPlateUI } from '@/plate/create-plate-ui';
+import { createPlateUI } from '@/lib/plate/create-plate-ui';
 import { Button } from '@/registry/default/plate-ui/button';
 import { Editor } from '@/registry/default/plate-ui/editor';
 import { FloatingToolbar } from '@/registry/default/plate-ui/floating-toolbar';

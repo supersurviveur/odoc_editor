@@ -1,24 +1,24 @@
-import {
-  MARK_BOLD,
-  MARK_CODE,
-  MARK_ITALIC,
-  MARK_STRIKETHROUGH,
-  MARK_UNDERLINE,
-} from "@udecode/plate-basic-marks";
+// import {
+//   MARK_BOLD,
+//   MARK_CODE,
+//   MARK_ITALIC,
+//   MARK_STRIKETHROUGH,
+//   MARK_UNDERLINE,
+// } from "@udecode/plate-basic-marks";
 import { useEditorReadOnly } from "@udecode/plate-common";
-import { ELEMENT_IMAGE } from "@udecode/plate-media";
+// import { ELEMENT_IMAGE } from "@udecode/plate-media";
 
-import { Icons } from "@/components/icons";
+// import { Icons } from "@/components/icons";
 
 import { InsertDropdownMenu } from "./insert-dropdown-menu";
-import { MarkToolbarButton } from "./mark-toolbar-button";
+// import { MarkToolbarButton } from "./mark-toolbar-button";
 import { ModeDropdownMenu } from "./mode-dropdown-menu";
 import { ToolbarGroup } from "./toolbar";
-import { TurnIntoDropdownMenu } from "./turn-into-dropdown-menu";
-import { MediaToolbarButton } from "./media-toolbar-button";
-import { EmojiDropdownMenu } from "./emoji-dropdown-menu";
-import { TableDropdownMenu } from "./table-dropdown-menu";
-import { CustomChart } from "./custom-chart";
+// import { TurnIntoDropdownMenu } from "./turn-into-dropdown-menu";
+// import { MediaToolbarButton } from "./media-toolbar-button";
+// import { EmojiDropdownMenu } from "./emoji-dropdown-menu";
+// import { TableDropdownMenu } from "./table-dropdown-menu";
+// import { CustomChart } from "./custom-chart";
 
 export function FixedToolbarButtons() {
   const readOnly = useEditorReadOnly();

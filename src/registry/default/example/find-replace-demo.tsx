@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { Plate } from '@udecode/plate-common';
 import { createPlugins } from '@udecode/plate-core';

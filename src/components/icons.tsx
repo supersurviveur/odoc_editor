@@ -61,6 +61,9 @@ import {
   WrapText,
   X,
   BarChartBig,
+  Paperclip,
+  CloudDownload,
+  Laptop,
 } from "lucide-react";
 
 import type { LucideIcon } from "lucide-react";
@@ -164,6 +167,7 @@ export const Icons = {
   alignLeft: AlignLeft,
   alignRight: AlignRight,
   arrowDown: ChevronDown,
+  attachment: Paperclip,
   bg: PaintBucket,
   blockquote: Quote,
   bold: Bold,
@@ -189,6 +193,7 @@ export const Icons = {
   commentAdd: MessageSquarePlus,
   delete: Trash,
   dragHandle: GripVertical,
+  downloadCloud: CloudDownload,
   editing: Edit2,
   emoji: Smile,
   externalLink: ExternalLink,
@@ -202,6 +207,7 @@ export const Icons = {
   indent: Indent,
   italic: Italic,
   kbd: Keyboard,
+  laptop: Laptop,
   lineHeight: WrapText,
   link: Link2,
   minus: Minus,

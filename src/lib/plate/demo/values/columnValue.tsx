@@ -3,7 +3,8 @@
 import {jsx} from '@udecode/plate-test-utils';
 
 
-export const columnValue: any = (
+
+export const columnValue: typeof jsx | any = (
     <fragment>
         <hh2>🌻 Column</hh2>
         <hp>Create column and the border will hidden when viewing</hp>
@@ -11,3 +12,4 @@ export const columnValue: any = (
         <hp>right</hp>
     </fragment>
 );
+

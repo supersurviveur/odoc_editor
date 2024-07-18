@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { createSoftBreakPlugin } from '@/../../../packages/break/dist';
+// import { createSoftBreakPlugin } from '@/../../../packages/break/dist';
+import { createSoftBreakPlugin } from '@udecode/plate-break';
 import { cn, withProps } from '@udecode/cn';
 import {
   MARK_BOLD,

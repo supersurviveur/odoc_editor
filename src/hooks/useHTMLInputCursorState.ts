@@ -1,6 +1,5 @@
 import { type RefObject, useCallback, useEffect, useState, useMemo } from 'react';
-
-import type { ComboboxInputCursorState } from '../types';
+import type { ComboboxInputCursorState } from '@udecode/plate-combobox';
 
 export const useHTMLInputCursorState = (
   ref: RefObject<HTMLInputElement>

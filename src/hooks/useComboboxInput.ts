@@ -14,11 +14,7 @@ import {
 } from '@udecode/plate-common';
 import { Hotkeys, isHotkey, removeNodes } from '@udecode/plate-common/server';
 import { useSelected } from 'slate-react';
-
-import type {
-  CancelComboboxInputCause,
-  ComboboxInputCursorState,
-} from '../types';
+import type { CancelComboboxInputCause, ComboboxInputCursorState } from '@udecode/plate-combobox';
 
 export interface UseComboboxInputOptions {
   ref: RefObject<HTMLElement>;

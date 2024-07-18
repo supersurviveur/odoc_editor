@@ -15,6 +15,7 @@ import {
 import { useReadOnly } from 'slate-react';
 
 import { Icons } from '@/components/icons';
+import { Columns2, Columns3 } from 'lucide-react';
 
 import { Button } from './button';
 import { Popover, PopoverAnchor, PopoverContent } from './popover';
@@ -63,23 +64,23 @@ export function ColumnFloatingToolbar({ children }: React.PropsWithChildren) {
       >
         <div className="box-content flex h-9 items-center gap-1 [&_svg]:size-4 [&_svg]:text-muted-foreground">
           <Button onClick={setDoubleColumn} size="sms" variant="ghost">
-            <Icons.doubleColumn />
+            <Columns2 />
           </Button>
           <Button onClick={setThreeColumn} size="sms" variant="ghost">
-            <Icons.threeColumn />
+            <Columns3 />
           </Button>
           <Button onClick={setRightSideDoubleColumn} size="sms" variant="ghost">
-            <Icons.rightSideDoubleColumn />
+            {/* <Icons.rightSideDoubleColumn /> */}
           </Button>
           <Button onClick={setLeftSideDoubleColumn} size="sms" variant="ghost">
-            <Icons.leftSideDoubleColumn />
+            {/* <Icons.leftSideDoubleColumn /> */}
           </Button>
           <Button
             onClick={setDoubleSideDoubleColumn}
             size="sms"
             variant="ghost"
           >
-            <Icons.doubleSideDoubleColumn />
+            {/* <Icons.doubleSideDoubleColumn /> */}
           </Button>
 
           <Separator className="my-1" orientation="vertical" />

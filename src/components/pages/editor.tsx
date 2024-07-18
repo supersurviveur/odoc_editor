@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useMemo, useRef} from 'react';
+import {useMemo, useRef} from 'react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
@@ -23,7 +23,7 @@ import {createExitBreakPlugin, createSingleLinePlugin, createSoftBreakPlugin,} f
 import {createCaptionPlugin} from '@udecode/plate-caption';
 import {createCodeBlockPlugin, ELEMENT_CODE_BLOCK,} from '@udecode/plate-code-block';
 import {createCommentsPlugin} from '@udecode/plate-comments';
-import {createPlugins, Plate, type PlatePluginComponent, useEditorRef,} from '@udecode/plate-common';
+import {createPlugins, Plate, type PlatePluginComponent } from '@udecode/plate-common';
 import {createDndPlugin} from '@udecode/plate-dnd';
 import {createEmojiPlugin} from '@udecode/plate-emoji';
 import {createExcalidrawPlugin} from '@udecode/plate-excalidraw';
@@ -325,18 +325,18 @@ export const usePlaygroundPlugins = ({
 export function OdocEditor(props: { id?: ValueId, initialValue: any }) {
     const containerRef = useRef(null);
     const enabled = settingsStore.use.checkedComponents();
-    const {id, initialValue, onChange} = props;
+    const {id, initialValue} = props;
 
     const plugins = usePlaygroundPlugins({
         components: withDraggables(createPlateUI()),
         id,
     });
-    let onEditorChange = (changes: any) => {
-        console.log(changes.operation)
-    };
-    let onInserComponent = (component: any) => {
-        console.log("insert com", component)
-    };
+    // let onEditorChange = (changes: any) => {
+    //     console.log(changes.operation)
+    // };
+    // let onInserComponent = (component: any) => {
+    //     console.log("insert com", component)
+    // };
 
 
     return (
@@ -348,7 +348,7 @@ export function OdocEditor(props: { id?: ValueId, initialValue: any }) {
                     key={id}
                     normalizeInitialValue
                     plugins={plugins}
-                    onChange={onChange}
+                    onChange={onchange}
                 >
                     <CommentsProvider>
                         {/*{enabled['fixed-toolbar'] && (*/}

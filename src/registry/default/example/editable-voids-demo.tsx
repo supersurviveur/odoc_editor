@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { createBasicElementsPlugin } from '@udecode/plate-basic-elements';
 import {
@@ -14,9 +14,8 @@ import {
 } from '@udecode/plate-common';
 import { createPlugins } from '@udecode/plate-core';
 import { createResetNodePlugin } from '@udecode/plate-reset-node';
+import { RadioGroup, RadioItem } from '@radix-ui/react-dropdown-menu';
 
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { editableProps } from '@/lib/plate/demo/editableProps';
 import { plateUI } from '@/lib/plate/demo/plateUI';
 import { basicNodesPlugins } from '@/lib/plate/demo/plugins/basicNodesPlugins';
@@ -69,24 +68,24 @@ export function EditableVoidElement({
         />
 
         <div className="grid w-full max-w-sm items-center gap-2">
-          <Label htmlFor="handed">Left or right handed:</Label>
+          <label htmlFor="handed">Left or right handed:</label>
 
           <RadioGroup defaultValue="r1" id="handed">
             <div className="flex items-center space-x-2">
-              <RadioGroupItem id="r1" value="r1" />
-              <Label htmlFor="r1">Left</Label>
+              <RadioItem id="r1" value="r1" />
+              <label htmlFor="r1">Left</label>
             </div>
             <div className="flex items-center space-x-2">
-              <RadioGroupItem id="r2" value="r2" />
-              <Label htmlFor="r2">Right</Label>
+              <RadioItem id="r2" value="r2" />
+              <label htmlFor="r2">Right</label>
             </div>
           </RadioGroup>
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="editable-void-basic-elements">
+          <label htmlFor="editable-void-basic-elements">
             Tell us about yourself:
-          </Label>
+          </label>
 
           <Plate
             id="editable-void-basic-elements"

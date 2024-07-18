@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 
 import {Plate, type TElement, type Value} from '@udecode/plate-common';
 import {createEditor} from 'slate';

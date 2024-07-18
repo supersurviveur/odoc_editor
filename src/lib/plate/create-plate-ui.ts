@@ -87,7 +87,7 @@ import {TodoListElement} from '@/registry/default/plate-ui/todo-list-element';
 import {ToggleElement} from '@/registry/default/plate-ui/toggle-element';
 import {withDraggables} from '@/registry/default/plate-ui/with-draggables';
 import {ELEMENT_EMOJI_INPUT} from "@udecode/plate-emoji";
-import {AmazingComponent, KEY_AMAZING} from "@/components/edtiro_compnents/amazing_com";
+// import {AmazingComponent, KEY_AMAZING} from "@/components/edtiro_compnents/amazing_com";
 
 // import { ELEMENT_EMOJI_INPUT } from '../../packages/emoji/dist';
 
@@ -95,7 +95,7 @@ export const createPlateUI = (
     overrideByKey?: Partial<Record<string, PlatePluginComponent>>,
     {
         draggable,
-        placeholder,
+        // placeholder,
     }: { draggable?: boolean; placeholder?: boolean } = {}
 ) => {
     let components: Record<string, PlatePluginComponent> = {

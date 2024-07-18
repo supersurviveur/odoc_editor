@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { cn, withRef } from '@udecode/cn';
 import { PlateElement, useElement } from '@udecode/plate-common';
 import { type TLinkElement, useLink } from '@udecode/plate-link';
