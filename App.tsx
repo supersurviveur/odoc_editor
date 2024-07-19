@@ -1,9 +1,8 @@
 import "./App.css";
-
-import {MyMentionItem} from "@/lib/plate/demo/values/mentionables";
+import OdocEditor from "@/components/pages/editor";
 import createAmazingPlugin, {KEY_AMAZING} from "@/components/edtiro_compnents/amazing_com";
 import {Icons} from "@/components/icons";
-import OdocEditor from "@/components/pages/editor";
+import {MyMentionItem} from "@/lib/plate/demo/values/mentionables";
 
 
 const initialValue = [
@@ -108,7 +107,7 @@ function App() {
     };
 
     let onChange = (value: any) => {
-        console.log({value})
+        // console.log({value})
     };
 
     let extraPlugins = [

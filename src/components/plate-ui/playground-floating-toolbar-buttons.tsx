@@ -19,7 +19,7 @@ import { ToolbarSeparator } from '@/registry/default/plate-ui/toolbar';
 // import { PlaygroundMoreDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-more-dropdown-menu';
 // import { PlaygroundTurnIntoDropdownMenu } from '../../../../plate/apps/www/src/components/plate-ui/playground-turn-into-dropdown-menu';
 
-export function PlaygroundFloatingToolbarButtons({ id }: { id?: ValueId }) {
+export function PlaygroundFloatingToolbarButtons({ id }: { id?: string }) {
   const readOnly = useEditorReadOnly();
 
   return (
