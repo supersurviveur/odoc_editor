@@ -5,7 +5,7 @@ import {terser} from 'rollup-plugin-terser';
 import external from 'rollup-plugin-peer-deps-external';
 import postcss from 'rollup-plugin-postcss';
 import json from '@rollup/plugin-json';
-
+import alias from '@rollup/plugin-alias';
 const packageJson = require('./package.json');
 
 export default {
@@ -27,6 +27,10 @@ export default {
     }
   ],
   plugins: [
+    alias({
+      'readable-stream': 'stream'
+    }),
+
     json(),
     external(),
     resolve(),

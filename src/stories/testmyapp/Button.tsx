@@ -1,5 +1,3 @@
-import "./App.css";
-
 import {MyMentionItem} from "@/lib/plate/demo/values/mentionables";
 import createAmazingPlugin, {KEY_AMAZING} from "@/components/edtiro_compnents/amazing_com";
 import {Icons} from "@/components/icons";
@@ -99,7 +97,39 @@ const mentions: MyMentionItem[] = [
 ];
 
 
-function App() {
+export interface ButtonProps {
+    /**
+     * Is this the principal call to action on the page?
+     */
+    primary?: boolean;
+    /**
+     * What background color to use
+     */
+    backgroundColor?: string;
+    /**
+     * How large should the button be?
+     */
+    size?: 'small' | 'medium' | 'large';
+    /**
+     * Button contents
+     */
+    label: string;
+    /**
+     * Optional click handler
+     */
+    onClick?: () => void;
+}
+
+/**
+ * Primary UI component for user interaction
+ */
+export const Button = ({
+                           primary = false,
+                           size = 'medium',
+                           backgroundColor,
+                           label,
+                           ...props
+                       }: ButtonProps) => {
     // const initialValue = usePlaygroundValue(id);
     // const key = useInitialValueVersion(initialValue);
 
@@ -130,4 +160,4 @@ function App() {
     );
 }
 
-export default App;
+export default Button;
