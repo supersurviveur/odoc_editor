@@ -1,4 +1,4 @@
-import {type ReactNode} from 'react';
+import React, {type ReactNode} from 'react';
 
 import {CommentsProvider as CommentsProviderPrimitive} from '@udecode/plate-comments';
 

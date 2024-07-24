@@ -405,33 +405,45 @@ export function OdocEditor(props: OdocEditorProps) {
         components: withDraggables(createPlateUI()),
         id,
     });
-    userMentions.map(item => {
+
+    if (Array.isArray(userMentions)) {
+        userMentions.map(item => {
             if (!MENTIONABLES.find(mention => mention.key === item.key)) {
                 MENTIONABLES.push({
                     key: item.key,
                     text: item.text
-                })
+                });
             }
-        }
-    );
+        });
+    }
+    
 
 
-    extraPlugins.map((item, index) => {
-
+    if (Array.isArray(extraPlugins)) {
+        extraPlugins.map((item, index) => {
             if (!slateSlashRules.find(rule => rule.value === item.key)) {
                 slateSlashRules.push({
                     icon: item.icon,
                     onSelect: (editor) => {
-                        insertNode(editor, {type: item.key, children: [{text: ""}]});
+                        insertNode(editor, { type: item.key, children: [{ text: "" }] });
                         onInsertComponent(item);
                     },
                     value: item.key
-                })
+                });
             }
-        }
-    );
+        });
+    }
 
-    let instantiatedExtraPlugins = extraPlugins.map(item => item.plugin());
+    function initializeExtraPlugins(plugins) {
+        if (!plugins) {
+          console.warn("plugins parameter is undefined. Initializing as an empty array.");
+          return [];
+        }
+        return plugins.map(item => item.plugin());
+      }
+      
+      let instantiatedExtraPlugins = initializeExtraPlugins(extraPlugins);
+      
 
     const combinedPlugins = [...plugins, ...instantiatedExtraPlugins];
 
