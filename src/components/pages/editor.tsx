@@ -92,7 +92,7 @@ import {FloatingToolbar} from '@/components/plate-ui/floating-toolbar';
 import {FireLiComponent, FireMarker,} from '@/registry/default/plate-ui/indent-fire-marker-component';
 import {TodoLi, TodoMarker,} from '@/registry/default/plate-ui/indent-todo-marker-component';
 import {Prism} from "@/registry/default/plate-ui/code-block-combobox";
-import {withDraggables} from "@/registry/default/plate-ui/with-draggables";
+import {withDraggables, withDraggable as withDraggableFunc} from "@/registry/default/plate-ui/with-draggables";
 import {Icons} from "@/components/icons";
 import {MyMentionItem} from "@/lib/plate/demo/values/mentionables";
 import {ValueId} from "../../config/customizer-plugins";
@@ -526,3 +526,5 @@ export function OdocEditor(props: OdocEditorProps) {
     );
 }
 export default OdocEditor;
+
+export const withDraggable = withDraggableFunc;
