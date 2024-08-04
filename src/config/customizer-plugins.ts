@@ -93,14 +93,14 @@ export const customizerPlugins = {
     label: 'Basic Marks',
     plugins: [],
     route: '/docs/basic-marks',
-    value: [...basicElementsValue, ...basicMarksValue],
+    value: [basicElementsValue, basicMarksValue],
   },
   basicnodes: {
     id: 'basicnodes',
     label: 'Basic Nodes',
     plugins: [],
     route: '/docs/basic-elements',
-    value: [...basicElementsValue, ...basicMarksValue],
+    value: [basicElementsValue, basicMarksValue],
   },
   blockselection: {
     id: 'blockselection',
