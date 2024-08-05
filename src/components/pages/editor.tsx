@@ -439,7 +439,10 @@ export function OdocEditor(props: OdocEditorProps) {
           console.warn("plugins parameter is undefined. Initializing as an empty array.");
           return [];
         }
-        return plugins.map(item => item.plugin());
+        return plugins.map(item => item.plugin()).map(item => {
+            if (item.component) item.component = withDraggableFunc(item.component);
+            return item
+        });
       }
       
       let instantiatedExtraPlugins = initializeExtraPlugins(extraPlugins);
